@@ -9,7 +9,7 @@
   <meta name="author" content="" />
   <link rel="icon" href="../../favicon.ico" />
 
-  <title>Android Typewriter | Tony Du</title><!-- Bootstrap core CSS -->
+  <title>Notifyr| Tony Du</title><!-- Bootstrap core CSS -->
   <link rel="stylesheet" href=
   "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type=
   "text/css" /><!-- Custom styles for this template -->
@@ -34,11 +34,19 @@
         <ul class="nav navbar-nav">
           	<li><a href="index.html">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
-			<li><a href="">Posts</a></li>
-			<li><a href="">Resume</a></li>
+			<li><a href="posts.html">Posts</a></li>
+			<li><a href="resume.html">Resume</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
+			<li><a href="#about">About</a></li>
+
+          	<li><a href="#hardware">Hardware</a></li>
+
+          	<li><a href="#software">Software</a></li>
+
+          	<li><a href="#future">Todos</a></li></ul>
+      </div><!--/.nav-collapse -->
 			
       </div><!--/.nav-collapse -->
     </div>
@@ -54,104 +62,90 @@
     <div id="about">
       <h2>About</h2>
 
-      <p>The Notifyr is a phone case for Android devices that contains a small low-power display, and can duplicate notifications  </p>
+      <p>The Notifyr is a phone case for smartphones that contains a small low-power display, and duplicates notifications from the host device to give people's smartphones a remote screen for their most important notifications, minimizing phone power consumption. When complete, the Notifyr device will be contained within a standard container, allowing it to be attached to any type of phone via 3d printed 'sleeves'. An app will run on Android, or using <a href="https://developer.apple.com/library/ios/documentation/CoreBluetooth/Reference/AppleNotificationCenterServiceSpecification/Introduction/Introduction.html">Apple's ANCS service</a>, and interface between the phone's notifications and the Notifyr can be made.</p>
     </div>
 
     <div id="diagram">
     <h2>Block diagram</h2><img src="assets/img/notifyrdiagram.png" alt=
-    "High-level Diagram" /></div>
+    "High-level Diagram" style="max-width: 66%; max-height: 66%; display: block; margin-left: auto; margin-right: auto;" /></div>
 
     <div id="hardware">
       <h2>Hardware</h2>
 
-      <p>The Hardware interface of the Android Typewriter was built around a Arduino Uno
-      microcontroller, and consists of 3 main components, which are:</p>
+		<div>
+          <img src="assets/img/notifyrnormal.jpg" style=" max-width: 66%; max-height: 66%; display: block; margin-left: auto; margin-right: auto;" alt="Notifyr Hardware" />
+
+          <div class="caption">
+            The Notifyr prototype, with the bluetooth module on the left, the microcontroller dev board in the center, and the screen on the right.
+          </div>
+        </div>
+<p>The Notifyr's made up of several hardware subsystems, these include:</p>
 
       <ul>
-        <li>USB host shield, which handles communication with the Android device.</li>
-
-        <li>Keyboard spoofer, which replicates the keyboard matrix circuit of the
-        typewriter.</li>
-
-        <li>The typewriter, which has its own keyboard input replaced with the keyboard
-        spoofer.</li>
+        <li>The microcontroller</li>
+        <li>The display</li>
+        <li>The Bluetooth module</li>
       </ul>
 
-      <div>
-        <h3>USB Host Shield</h3>
-
-        <p>To act as a Android accessory, an <a href=
-        "https://www.sparkfun.com/products/9947">USB host shield</a> based on the
-        MAX3421E host controller, is used to handle USB communication, and connects with
-        the Arduino controller via a SPI connection.</p>
-      </div>
-
-      <div>
-        <h3>Keyboard Spoofer</h3>
-
-        <div class="col-md-4">
-          <img src="assets/img/typewriterspoofer.jpg" alt="Keyboard Spoofer" />
-
-          <div class="caption">
-            Keyboard Spoofer Circuit
-          </div>
-        </div>
-		<div class="col-md-4">
-          <img src="assets/img/typewriter.jpg" alt="Typewriter Connections" />
-
-          <div class="caption">
-            Typewriter Connections
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <img src="assets/img/typewritercloseup.jpg" alt="Typewriter Closeup" />
-
-          <div class="caption">
-            Typewriter Connection Closeup
-          </div>
-        </div>
-
-        <p>To direct input text to the typewriter, a keyboard spoofer module was used to
-        fake the behaviour of a standard matrix keyboard pad. This was done by having a
-        pair of <a href="http://www.ti.com/lit/ds/symlink/cd4051b.pdf">CD4051 chips</a>,
-        with one configured as a demux accepting inputs from the rows output of the
-        typewriter keyboard interface, and another configured as a mux, connected to the
-        column inputs of the keyboard interface. The select pins, attached to the Arduino
-        microcontroller, allow it to redirect the output of a row to a paticular column,
-        emulating the behaviour of the circuit completion when a key is pressed on the
-        keyboard.</p>
-      </div>
+		<div>
+	<div>
+      <h3>The Microcontroller</h3>
     </div>
+      <p>The Notifyr is currently built around the <a href="http://ca.mouser.com/Search/ProductDetail.aspx?R=STM32L152RBT6">STM32L152</a>, an ARM Cortex-M3 microcontroller that has 32kb of RAM (awesome for display framebuffers!) and 128kb of ROM (awesome for bitmaps/fonts!), features several low power modes to minimize idle power consumption, and has a whole lot of open source tools and code, including <a href="http://www.coocox.org/index.html">Coocox</a>, an open source IDE based off Eclipse with lots of "click and use" code examples and libraries. For the Notifyr, processor speed's not that important, since it's mostly serving static content, but with 2 synchronous serial ports and 3 UART ports, we can connect a lot of external devices together if we needed it. Additionally, buttons for user input are tied to a couple of GPIO pins, and an RTC provides independent timekeeping on the Notifyr. </p>
+</div>
 
-    <div id="software">
+		<div>
+	<div>
+      <h3>The Display</h3>
+    </div>
+      <p>The Notifyr currently uses a <a href="http://ca.mouser.com/access/?pn=852-LS013B7DH01">2.7 inch Sharp Memory LCD</a>, a extremely low power display that's used by wearables like the Pebble smartwatch. It connects to the microcontroller over a standard SPI connection, and, when showing static content, it's only consuming 50μW(about as much as a regular watch!), which lets the Notifyr run for a really long time. However, there's 2 annoying problems with it, compared to regular screens:
+      	 <ul>
+        <li>It's <a href="http://en.wikipedia.org/wiki/Write-only_memory_(joke)">write-only</a>, so a framebuffer is sort of totally required to use it</li>
+        <li>The display electrical interface is a little bit annoying, with 3.3V signalling and 5V supply, and needs a external refresh timer signal (good thing there's a whole bunch of spare timers on the microcontroller!)</li>
+      </ul>
+      	However, for the Notifyr, it beats the off-the-shelf low-energy screen alternatives, like E-ink displays, in terms of interfacing simplicity, so it's a comparatively better choice for the Notifyr's display.</p>
+      
+</div>
+
+		<div>
+      <h3>The Bluetooth module</h3>
+    </div>
+      <p>The Notifyr uses a BLE112 module for communication with the host phone, a Bluetooth low energy module that has a self-contained processor and BLE stack, as well as a radio, so that incoming data can be processed and delivered out an UART or SPI interface. The module also allows scripts written in a proprietary language, <a href="http://www.sureshjoshi.com/development/bgscript-bglib-bgapi-explained/">BGScript</a>, to run. This can be used to define the characteristics and services of the module(what the BLE protocol uses to define how device interact with each other), such as a pair of RX/TX characteristics to replicate a UART cable. While it consumes very little power, and allows Apple devices to connect (regular Bluetooth requires <a href="https://groups.google.com/forum/#!topic/rhomobile/jFawkeim6yI"> Apple's approval</a>) the BLE protocol was not designed with speed in mind (limited packet sizes, long waits between connections), so throughput is very low(~8Kbps), making sending anything other then messages somewhat impractical.</p>
+</div>
+
+  
+	 <div id="software">
       <h2>Software</h2>
 
-      <p>The software for the Android Typewriter is comprised of an Android application,
-      and an Arduino firmware.</p>
+	 <div class="col-md-4">
+          <img src="assets/img/app.png"  style=" max-width: 55%; max-height: 55%; display: block; margin-left: auto; margin-right: auto;" />
 
-      <p>The Android application is built around a foreground service that handles the
-      connection over USB to the Arduino device, and listens for special broadcast
-      intents that are generated by seperate SMS and GMail intent broadcast receivers for
-      messages to to sent over the USB socket connection. To handle configuration, a
-      seperate settings activity is used.</p>
+          <div class="caption">
+            Android Notifyr test app
+          </div>
+        </div>
+		<div class="col-md-8">
+      <p>There's currently 2 main software components for the Notifyr, an Android app (iOS functionality can currently be built with a custom ANCS script on the bluetooth module), and the firmware running on the Notifyr itself. </p>
 
-      <p>The Arduino firmware handles the processing and output of messages. It does this
-      by polling the USB controller for new input data, and sets the spoofer control pins
-      using an embedded ASCII to keyboard press mapping. Additionally, an alternative
-      firmware allows GSM modules with an AT command interface, like the <a href="https://www.sparkfun.com/products/9607">SMB5100B</a> to provide SMS messages as
-      an input.</p>
+      <p>The Android app is fairly minimal, as its main job is to send messages from the phone to the Notifyr device. Most of that is implemented in the <a href="https://developer.android.com/reference/android/service/notification/NotificationListenerService.html">notificationlistenerservice</a> handler, which allows the app to react to new notifications showing up in the Android OS. When it does get a message, it'll start the BLE connectivity service, and add the message to a queue. The messages in the queue are then sent one-by-one from the phone to the device, silently failing if something goes wrong( it's not like any of those messages are that important, and convenience is key :D). There is an activity for discovering Notifyr devices, sending basic test messages, and sending the current time for the notifyr to show independently. Another service is used to monitor for responses from the bluetooth device, such as pre-canned responses for messages. To interact with other apps, an intent broadcast/receive system is used for third party apps to listen and handle events relating to the Notifyr.</p>
+
+      <p>The firmware is built as a <a href="http://en.wikibooks.org/wiki/Embedded_Systems/Super_Loop_Architecture">superloop</a>, with incoming UART interrupts and timer events triggering changes to what's currently being displayed. To simplify graphics drawing on the screen, <a href="https://github.com/adafruit/Adafruit-GFX-Library">Adafruit's GFX library</a> was used for all the graphics calls, with some modifications to allow for different sized fonts. <br><br><br></p>
+	</div>
+
     </div>
 
-    <div id="credits">
-      <h2>Credits</h2>
+    <div id="future">
+      <h2>Future changes/Todos</h2>
 
-      <p>Thanks go to Follower for the example on background USB accessory services in
-      Android.</p>
-
-      <p>See: <a href=
-      "http://www.labradoc.com/i/follower/p/android-background-service-usb-accessory">http://www.labradoc.com/i/follower/p/android-background-service-usb-accessory</a></p>
+      <p>Some possible improvements/changes for the Notifyr include:</p>
+<ul>
+        <li>Replacing BLE module with classic/dual mode Bluetooth module: Currently, throughput is way too low to do stuff like fast bitmap updates or firmware updates, so replacing it with a classic bluetooth interface could make both of those practical, at the expense of power consumption and iOS compatibility.</li>
+        <li>Adding in a capacitive touch panel: Currently, we're using regular push buttons for user input, so it might be cooler from a UX perspective to have something a little more "futuristic", at the expense of increased part count and PCB design time.</li>
+		<li>Add backlights: There's no current plans to add backlights, but it would be a simple way to improve readability, but obviously increases power draw.</li>
+      </ul>
     </div>
+
+
   </div><!-- /.container -->
   <!-- Bootstrap core JavaScript
     ================================================== -->
