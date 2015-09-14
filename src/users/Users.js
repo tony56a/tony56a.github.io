@@ -30,19 +30,19 @@
 
             // route for the default page
             .when('/', {
-                templateUrl : './src/users/view/default.html',
+                templateUrl : './src/tabs/view/default.html',
                 controller  : 'defaultController'
             })
 
             // route for the game detail page
             .when('/games/:gameId', {
-                templateUrl : './src/users/view/gamedetail.html',
+                templateUrl : './src/tabs/view/gamedetail.html',
                 controller  : 'GameDetailController'
             })
 
             // route for the scoring page
             .when('/scoring', {
-                templateUrl : './src/users/view/scoring.html',
+                templateUrl : './src/tabs/view/scoring.html',
                 controller  : 'scoringController'
             })
             
