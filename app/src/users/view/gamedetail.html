@@ -1,0 +1,64 @@
+<div ng-controller="GameDetailController as gc">
+<h1>Game #{{game.gameNum}}</h1>
+<section layout=column>
+<h2>Players</h2>
+<div>{{game.players[0]}}</div>
+<div>{{game.players[1]}}</div>
+</section>
+	<section layout="column" layout-align="center center" >
+	<h2> Contract Suit </h2>
+    <div layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+      <md-button ng-repeat="i in ['notrumps','spades','hearts','clubs','diamonds']" 
+       class="md-raised" ng-disabled="i==game.contract.suit"
+       ng-click="gc.setGameContractValue('suit',i)">
+      	<md-icon md-svg-icon='{{i}}'></md-icon>
+      </md-button>
+      
+    </div>
+    </section>
+
+	<section layout="column" layout-align="center center" >
+	<h2> Contract Value </h2>
+    <div layout="row" layout-sm="column" layout-align="center center" >
+      <md-button ng-repeat="i in [1,2,3,4,5,6,7]" ng-disabled="i==game.contract.num" ng-click="gc.setGameContractValue('num',i)"
+       class="md-raised" ng-click="">	
+      	{{i}}
+      </md-button>
+    </div>
+    </section>
+
+
+
+    <section layout="column" layout-align="center center" >
+	<h2> Contract Bonus </h2>
+    <div layout="row" layout-sm="column" layout-align="center center" >
+      <md-button ng-repeat="i in [0,1,2]" 
+      ng-disabled="i==game.contract.bonus"
+       class="md-raised" ng-click="gc.setGameContractValue('bonus',i)">	
+      	{{gc.bonusToStr(i)}}
+      </md-button>
+    </div>
+    </section>
+
+    <section layout="column" layout-align="center center" >
+	<h2> Game Result </h2>
+	   <div layout="row" layout-sm="column" layout-align="center center" >
+	     <md-button ng-repeat="i in [7,6,5,4,3,2,1]" class="md-raised md-warn"
+	     ng-disabled="i==game.result*-1" ng-click="gc.setGameResult(i*-1)">	
+      	{{'-'+i}}
+      </md-button>
+    </div>
+     <div layout="row" layout-sm="column" layout-align="center center" >
+	   <md-button class="md-raised" ng-disabled="game.result==0" ng-click="gc.setGameResult(0)" >0</md-button>
+    </div>
+    <div layout="row" layout-sm="column" layout-align="center center" 
+    >
+   
+      <md-button ng-repeat="i in [1,2,3,4,5,6]" class="md-raised md-primary"
+      ng-disabled="i==game.result" ng-click="gc.setGameResult(i)" >	
+      	{{'+'+i}}
+      </md-button>
+    </div>
+    </section>
+
+</div>

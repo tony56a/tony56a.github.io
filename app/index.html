@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Duplicates Tracker</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/0.9.8/angular-material.min.css"/>
+    <link rel="stylesheet" href="assets/app.css"/>
+  </head>
+
+  <body ng-app="starterApp" layout="row" ng-controller="UserController as ul">
+
+  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
+                md-component-id="left"
+                md-is-locked-open="$mdMedia('gt-md')">
+
+    <md-toolbar class="md-whiteframe-z1">
+    <h1>Current Players</h1>
+     <div>{{$storage.players[0]}}/{{$storage.players[1]}}</div>
+    </md-toolbar>
+
+   <md-list>
+      <md-list-item ng-repeat="game in $storage.games">
+          <md-button 
+            ng-class="{'selected' : game === ul.selected }"
+            ng-click="ul.showGame(game)">
+            <div>{{game.players[0]}},{{game.players[1]}}</div>
+            <div><md-icon md-svg-icon="{{game.contract.suit}}"></md-icon>
+                  {{game.contract.num}}</div>
+            <div>Bonus: {{ul.bonusToStr(game.contract.bonus) }}</div>
+            <div>Result: {{ul.resultToStr(game.result)}}</div>
+          </md-button>
+      </md-list-item>
+
+      <md-list-item>
+        <md-button ng-click="ul.addGame()" >
+            <h2>Add a new game</h2>
+        </md-button>
+      </md-list-item>
+      <md-list-item>
+        <md-button ng-click="" >
+            <h2>Show Scoring</h2>
+        </md-button>
+      </md-list-item>
+      <md-list-item>
+        <md-button ng-click="ul.resetGames()" >
+            <h2>Clear all games</h2>
+        </md-button>
+      </md-list-item>
+      <md-list-item>
+        <md-button ng-click="ul.updatePlayers($event)" >
+            <h2>Update Players</h2>
+        </md-button>
+      </md-list-item>
+
+    </md-list>
+
+  </md-sidenav>
+
+
+  <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
+
+    <md-toolbar layout="row" class="md-whiteframe-z1">
+      <md-button class="menu" hide-gt-md ng-click="ul.toggleList()">
+        <md-icon md-svg-icon="menu" ></md-icon>
+      </md-button>
+      <h1>Duplicates Tracker</h1>
+    </md-toolbar>
+
+    <md-content flex id="content">
+      <div ng-view></div>
+    </md-content>
+
+  </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-aria.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/0.9.8/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+
+    <script src="./src/users/Users.js"></script>
+    <script src="./src/users/UserController.js"></script>
+    <script src="./src/users/DefaultController.js"></script>
+    <script src="./src/users/GameDetailController.js"></script>
+
+    <script type="text/javascript">
+    </script>
+
+  </body>
+</html>
